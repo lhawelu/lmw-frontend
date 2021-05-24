@@ -37,3 +37,6 @@ const ordersSlice = createSlice({
 export default ordersSlice.reducer
 
 export const selectAllOrders = state => state.orders.orders
+
+export const selectOrderById = (state, orderId) =>
+  state.orders.orders.find(order => String(order.id) === orderId)

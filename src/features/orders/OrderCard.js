@@ -1,10 +1,10 @@
 import { Card, List } from 'semantic-ui-react'
-import { OrderItems } from './OrderItems'
+import { Link } from 'react-router-dom'
 
 const formatDate = ( created_at ) => {
   const orderDate = new Date(created_at)
   const date = orderDate.getDate();
-  const month = orderDate.getMonth(); //Be careful! January is 0 not 1
+  const month = orderDate.getMonth();
   const year = orderDate.getFullYear();
 
   return  (month + 1) + "-" + date + "-" + year;
@@ -13,7 +13,7 @@ const formatDate = ( created_at ) => {
 export const OrderCard = ({ order }) => {
   
   return (
-    <Card>
+    <Card >
       <Card.Content>
         <Card.Header>Order Placed </Card.Header>
         <Card.Header>{formatDate(order.created_at)}</Card.Header>
@@ -24,11 +24,14 @@ export const OrderCard = ({ order }) => {
       <Card.Content extra>
         <h4>Order Items:</h4>
         <List bulleted>
-          {order.items.map(item => (
-            <OrderItems item={item}/>
+          {order.items.map((item, index )=> (
+            <List.Item key={index}>{item.item.name}</List.Item>
           ))}
         </List>
       </Card.Content>
+      <Link to={`/orders/${order.id}`} className='button muted-button'>
+         View Post
+       </Link>
     </Card>
   )
 }

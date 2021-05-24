@@ -25,7 +25,7 @@ export const OrdersList = () => {
     content = <div className="loader">Loading...</div>
   } else if (orderStatus === 'succeeded') {
     content = orders.map(order => (
-      <OrderCard order={order}/>
+      <OrderCard key={order.id} order={order}/>
     ))
   } else if (orderStatus === 'failed') {
     content = <div>{error}</div>
