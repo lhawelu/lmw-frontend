@@ -30,7 +30,7 @@ export const OrderCard = ({ order }) => {
         </List>
       </Card.Content>
       <Link to={`/orders/${order.id}`} className='button muted-button'>
-         View Post
+         View Order
        </Link>
     </Card>
   )

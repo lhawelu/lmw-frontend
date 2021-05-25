@@ -6,6 +6,9 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css'
+import { fetchItems } from './features/items/itemSlicer'
+
+store.dispatch(fetchItems())
 
 ReactDOM.render(
   <React.StrictMode>

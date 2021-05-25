@@ -1,6 +1,6 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectOrderById } from './ordersSlice'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectOrderById, fetchOrders } from './ordersSlice'
 import { Card, List } from 'semantic-ui-react'
 
 const formatDate = ( created_at ) => {
@@ -13,14 +13,28 @@ const formatDate = ( created_at ) => {
 }
 
 export const SingleOrderPage = ({ match }) => {
+  const dispatch = useDispatch()
   const { orderId } = match.params
-
   const order = useSelector(state => selectOrderById(state, orderId))
+
+  const orderStatus = useSelector(state => state.orders.status)
+
+  useEffect(() => {
+    if (orderStatus === 'idle') {
+      dispatch(fetchOrders())
+    }
+  }, [orderStatus, dispatch])
   
-  if (!order) {
+  if (!order && orderStatus === 'idle') {
     return (
       <section>
-        <h2>Order not found!</h2>
+        <h2>Loading</h2>
+      </section>
+    )
+  } else if (!order && orderStatus === 'succeeded'){
+    return (
+      <section>
+        <h2>Post not found!</h2>
       </section>
     )
   }
