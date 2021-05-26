@@ -6,7 +6,7 @@ const initialState = {
   error: null
 }
 
-export const fetchOrders = createAsyncThunk('orders/fetchUsers', async () => {
+export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
   const token = localStorage.getItem('token')
   const response = fetch('http://localhost:3000/api/v1/orders', {
     method: 'GET',

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 
 export const NavBar = () => {
-  
+  const history = useHistory();
   const [activeItem, setActiveItem] = useState('orders')
-
+  
   return (
     <div>
       <Menu pointing secondary>
@@ -18,15 +18,19 @@ export const NavBar = () => {
           onClick={e => (setActiveItem('orders'))}
         />
         <Menu.Item
+          as={Link} 
+          to='/new_order'
           name='new order'
           active={activeItem === 'new order'}
           onClick={e => (setActiveItem('new order'))}
         />
         <Menu.Menu position='right'>
-          <Menu.Item
-            name='logout'
-            active={activeItem === 'logout'}
-            onClick={e => (setActiveItem('logout'))}
+          <Menu.Item 
+            name='logout' 
+            onClick={() => {
+              localStorage.clear()
+              history.push('/login')
+            }}
           />
         </Menu.Menu>
       </Menu>

@@ -25,3 +25,5 @@ const itemsSlice = createSlice({
 })
 
 export default itemsSlice.reducer
+
+export const selectAllItems = state => state.items

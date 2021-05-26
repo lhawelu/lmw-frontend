@@ -14,6 +14,7 @@ const handleLogin = (e, body, history) => {
     if (tokenObj.jwt) {
         localStorage.setItem('token', tokenObj.jwt);
         localStorage.setItem('username', tokenObj.user.username);
+        localStorage.setItem('loggedIn', true);
         history.push('/orders')
     }
     else {
