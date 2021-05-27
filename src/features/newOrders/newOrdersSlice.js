@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+const newOrderURL = "http://localhost:3000/api/v1/orders"
+
 const initialState = {
   total_amount: 0,
   tax_amount: 0,
@@ -8,10 +10,25 @@ const initialState = {
 }
 
 const roundToTwo = (num) => {
-  return +(Math.round(num + "e+2")  + "e-2");
+  return +(Math.round(num + 'e+2')  + 'e-2');
 }
-// export const addNewPost = createAsyncThunk(
-//   'posts/addNewPost',
+
+export const createNewOrder = createAsyncThunk('posts/createNewOrder', async newOrder => {
+  const token = localStorage.getItem('token')  
+  const configObj = {
+    method: 'POST',
+    headers: {
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(newOrder)
+  };
+
+  const response = await fetch(newOrderURL, configObj)
+  
+  return response.json()
+}) 
+
 //   // The payload creator receives the partial `{title, content, user}` object
 //   async initialPost => {
 //     // We send the initial data to the fake API server
@@ -46,13 +63,17 @@ const newOrdersSlice = createSlice({
         state.subtotal = roundToTwo(state.subtotal + action.payload.price)
         state.tax_amount = roundToTwo((state.subtotal + action.payload.price) * 0.0875)
         state.total_amount = roundToTwo((state.subtotal + action.payload.price) * 1.0875)
-        state.show_page = false
-        state.show_page_item = {}
       }
     }
   },
-  extraReducers: {}
-  
+  extraReducers: {
+    [createNewOrder.fulfilled]: (state, action) => {
+      state.total_amount = 0
+      state.tax_amount = 0
+      state.subtotal = 0
+      state.order_items = []
+    }
+  }  
 })
 
 export const { itemAdded, showItem, backToItemList } = newOrdersSlice.actions

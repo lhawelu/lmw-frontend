@@ -1,20 +1,28 @@
 import React, { Fragment, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Card, Grid, Icon, Button } from 'semantic-ui-react'
 import { OrderItemCard } from './OrderItemCard'
 import { AddItemCard } from './AddItemPage'
-import { useDispatch } from 'react-redux'
+import { useDispatch} from 'react-redux'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 import { selectAllItems } from '../items/itemSlicer' 
-import { itemAdded } from './newOrdersSlice'
+import { itemAdded, createNewOrder } from './newOrdersSlice'
 
 export const NewOrderPage = () => {
+  const history = useHistory();
   const dispatch = useDispatch()
+
   const items = useSelector(selectAllItems)
   const cartItems = useSelector(state => state.newOrder.order_items)
+  const orderTotalAmount = useSelector(state => state.newOrder.total_amount)
+  const orderTaxAmount = useSelector(state => state.newOrder.tax_amount)
   const orderSubtotal = useSelector(state => state.newOrder.subtotal)
+  
   const [showPage, setShowPage] = useState(false)
   const [item, setItem] = useState('')
+  const [createOrderRequestStatus, setCreateOrderRequestStatus] = useState('idle')
 
   const onAddToOrder = (item) => {
     setShowPage(true)
@@ -30,6 +38,32 @@ export const NewOrderPage = () => {
   const onGoBack = () => {
     setShowPage(false)
     setItem("")
+  }
+
+  const body = {
+    order: {
+      total_amount: orderTotalAmount,
+      tax_amount: orderTaxAmount,
+      subtotal: orderSubtotal ,
+    },
+    items: cartItems.map( item => item.id)
+  }
+
+  const onCheckout = async () => {
+      if (createOrderRequestStatus === 'idle') {
+      try {
+        setCreateOrderRequestStatus('pending')
+        const resultAction = await dispatch(
+          createNewOrder(body)
+        )
+        unwrapResult(resultAction)
+      } catch (err) {
+        console.error('Failed to save the order: ', err)
+      } finally {
+        setCreateOrderRequestStatus('idle')
+        history.push('/orders')
+      }
+    }
   }
 
   let content
@@ -54,7 +88,7 @@ export const NewOrderPage = () => {
           <Grid.Column width={3} textAlign="center" >  
             Subtotal: <Icon name='dollar' /> {orderSubtotal} 
             <br/>
-            <Button>Checkout</Button>
+            <Button onClick={onCheckout}>Checkout</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
