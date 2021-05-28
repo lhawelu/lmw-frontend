@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
-
 export const NavBar = () => {
-  const history = useHistory();
+  const history = useHistory()
   const [activeItem, setActiveItem] = useState('orders')
+
+  const logOut = () => {
+    window.localStorage.clear()
+    window.location.reload()
+  }
   
   return (
     <div>
@@ -28,8 +33,8 @@ export const NavBar = () => {
           <Menu.Item 
             name='logout' 
             onClick={() => {
-              localStorage.clear()
-              history.push('/login')
+              logOut()
+              history.push('/')
             }}
           />
         </Menu.Menu>

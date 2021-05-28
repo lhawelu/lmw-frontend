@@ -14,7 +14,7 @@ const roundToTwo = (num) => {
 }
 
 export const createNewOrder = createAsyncThunk('posts/createNewOrder', async newOrder => {
-  const token = localStorage.getItem('token')  
+  const token = window.localStorage.getItem('token')  
   const configObj = {
     method: 'POST',
     headers: {
@@ -28,30 +28,6 @@ export const createNewOrder = createAsyncThunk('posts/createNewOrder', async new
   
   return response.json()
 }) 
-
-//   // The payload creator receives the partial `{title, content, user}` object
-//   async initialPost => {
-//     // We send the initial data to the fake API server
-//     const response = await client.post('/fakeApi/posts', { post: initialPost })
-//     // The response includes the complete post object, including unique ID
-//     return response.post
-//   }
-// )
-
-// export const fetchOrders = createAsyncThunk('orders/fetchUsers', async () => {
-//   const token = localStorage.getItem('token')
-//   const response = fetch('http://localhost:3000/api/v1/orders', {
-//     method: 'GET',
-//     headers: {
-//       'Authorization': `Bearer ${token}`
-//     }
-//   })
-//   .then(res => res.json())
-//   .then(response => response.orders)
-//   .catch(response => response.error);
-
-//   return response
-// })
 
 const newOrdersSlice = createSlice({
   name: 'newOrders',

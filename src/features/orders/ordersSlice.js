@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
-  const token = localStorage.getItem('token')
+  const token = window.localStorage.getItem('token')
   const response = fetch('http://localhost:3000/api/v1/orders', {
     method: 'GET',
     headers: {

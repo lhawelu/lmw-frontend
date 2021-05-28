@@ -4,28 +4,49 @@ import {
   Switch,
   Route,
   Redirect,
+  Link
 } from 'react-router-dom'
+
 import './App.css';
+import ProtectedRoute from './routes/ProtectedRoutes';
+import { useSelector } from 'react-redux'
+
 import { OrdersList } from './features/orders/OrdersList';
-import { Login } from './features/login/Login'
 import { SingleOrderPage } from './features/orders/SingleOrderPage'
 import { NavBar } from './app/NavBar'
 import { NewOrderPage } from './features/newOrders/NewOrderPage'
+import { LandingPage } from './routes/LandingPage';
 
 function App() {
+  const userLoggedIn = !!useSelector(state => state.auth.loggedIn)
+
   return (
-    <Router>
-      <NavBar />
-      <div className="App">
+    <div className="App">
+      <Router>
+        {userLoggedIn ? <NavBar /> : null}
         <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/orders/:orderId' component={SingleOrderPage} /> 
-          <Route exact path='/orders' component={OrdersList} />
-          <Route exact path='/new_order' component={NewOrderPage} />    
-          <Redirect to="/" />
+          <Route exact path='/'>
+            {userLoggedIn ? (
+              <Redirect to="/orders" />
+            ) : (
+              <LandingPage />
+            )}
+          </Route>
+          <ProtectedRoute exact path='/orders/:orderId'>
+            <SingleOrderPage />
+          </ProtectedRoute> 
+          <ProtectedRoute exact path='/orders'>
+            <OrdersList />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/new_order'>
+            <NewOrderPage />
+          </ProtectedRoute>
+          <Route path="*">
+            <div>404 Not found </div>
+          </Route>
         </Switch>
-      </div>
-    </Router> 
+      </Router> 
+    </div>
   )
 }
 
