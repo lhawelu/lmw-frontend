@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
 export const NavBar = () => {

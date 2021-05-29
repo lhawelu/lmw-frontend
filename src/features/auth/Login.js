@@ -8,7 +8,7 @@ import { loginAuth, authSelector, clearState } from './authSlice'
 export const Login = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { register, errors, handleSubmit } = useForm()
+  const { register, formState: { errors }, handleSubmit } = useForm()
 
   const { isSuccess, isError, errorMessage } = useSelector(authSelector)
 
@@ -39,14 +39,17 @@ export const Login = () => {
     <div>
       <form onSubmit={handleSubmit(handleLogin)}>
         <div>
-          <input type="username" name="username" {...register('username', { required: true })} />Username
+          <input type="username" name="username" {...register('username', { required: true })} />Username  
         </div>
         <div>
           <input type="password" name="password" {...register('password', { required: true })} />Password
         </div>
         <div style={{display: 'flex','justifyContent': 'center'}}>
           <input type="submit" value="GO"/>
-        </div> 
+        </div>
+        {errors.username?.type === 'required' && "Username is required"}
+        <br/>
+        {errors.password?.type === 'required' && "Password is required"}
       </form>
     </div>
   )

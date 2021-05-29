@@ -8,8 +8,7 @@ import { selectAllOrders, fetchOrders } from './ordersSlice'
 
 export const OrdersList = () => {
   const dispatch = useDispatch()
-  const orders = useSelector(selectAllOrders)
-
+  const orders = useSelector(selectAllOrders).slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   const orderStatus = useSelector(state => state.orders.status)
   const error = useSelector(state => state.orders.error)
 

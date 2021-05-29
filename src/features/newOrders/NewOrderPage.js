@@ -1,18 +1,20 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Card, Grid, Icon, Button } from 'semantic-ui-react'
 import { OrderItemCard } from './OrderItemCard'
 import { AddItemCard } from './AddItemPage'
 import { useDispatch} from 'react-redux'
-import { unwrapResult } from '@reduxjs/toolkit'
 
 import { selectAllItems } from '../items/itemSlicer' 
-import { itemAdded, createNewOrder } from './newOrdersSlice'
+import { itemAdded, createNewOrder, clearNewOrderStatus, newOrderSelector } from './newOrdersSlice'
+import { resetStatus } from '../orders/ordersSlice'
 
 export const NewOrderPage = () => {
   const history = useHistory();
   const dispatch = useDispatch()
+
+  const { newOrderisSuccess, newOrderisError, newOrderErrorMessage } = useSelector(newOrderSelector)
 
   const items = useSelector(selectAllItems)
   const cartItems = useSelector(state => state.newOrder.order_items)
@@ -50,21 +52,27 @@ export const NewOrderPage = () => {
   }
 
   const onCheckout = async () => {
-      if (createOrderRequestStatus === 'idle') {
-      try {
-        setCreateOrderRequestStatus('pending')
-        const resultAction = await dispatch(
-          createNewOrder(body)
-        )
-        unwrapResult(resultAction)
-      } catch (err) {
-        console.error('Failed to save the order: ', err)
-      } finally {
-        setCreateOrderRequestStatus('idle')
-        history.push('/orders')
-      }
+    if (createOrderRequestStatus === 'idle') {
+      setCreateOrderRequestStatus('pending')
+      dispatch(createNewOrder(body))
     }
   }
+
+
+  useEffect(() => {
+    console.log('new Order Error = ', newOrderisError)
+    console.log('new Order Success = ', newOrderisSuccess)
+    if (newOrderisError) {
+      alert(newOrderErrorMessage.message)
+      dispatch(clearNewOrderStatus())
+    }
+
+    if (newOrderisSuccess) {
+      dispatch(clearNewOrderStatus())
+      dispatch(resetStatus())
+      history.push('/orders')
+    }
+  }, [newOrderisError, newOrderisSuccess, newOrderErrorMessage, history, dispatch]);
 
   let content
 

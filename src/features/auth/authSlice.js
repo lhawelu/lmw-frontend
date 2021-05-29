@@ -5,8 +5,8 @@ const loginURL = 'http://localhost:3000/api/v1/login'
 const initialState = {
   loggedIn: !!window.localStorage.getItem('token'),
   status: 'idle',
-  isSuccess: '',
-  isError: '',
+  isSuccess: false,
+  isError: false,
   errorMessage: '',
 }
 
@@ -41,7 +41,7 @@ const authSlice = createSlice({
     clearState: (state) => {
       state.isError = false
       state.isSuccess = false
-      return state;
+      return state
     }
   },
   extraReducers: {
@@ -49,7 +49,7 @@ const authSlice = createSlice({
       state.isSuccess = true
       state.loggedIn = true
       state.status = 'succeeded'
-      return state;
+      return state
     },
     [loginAuth.rejected]: (state, action) => {
       state.isError = true;

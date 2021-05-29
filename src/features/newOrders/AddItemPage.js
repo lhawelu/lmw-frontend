@@ -1,5 +1,5 @@
 import { Card, Button, Icon } from 'semantic-ui-react'
-import "semantic-ui-css/semantic.min.css";
+import 'semantic-ui-css/semantic.min.css';
 
 export const AddItemCard = ({ item, onGoBack, onItemAdded  }) => {
   
@@ -17,10 +17,10 @@ export const AddItemCard = ({ item, onGoBack, onItemAdded  }) => {
         </span>
       </Card.Content>
       <Card.Content extra>
-          <span className="ui right floated">
+          <span className='ui right floated'>
             <Button onClick={e => onItemAdded(item)}>Add to Order</Button>
           </span>
-          <span className="ui right floated">
+          <span className='ui right floated'>
             <Button onClick={onGoBack}>Go Back</Button>
           </span>
         </Card.Content>

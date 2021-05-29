@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from "react-router";
 import { selectOrderById, fetchOrders } from './ordersSlice'
 import { Card, List } from 'semantic-ui-react'
 
 const formatDate = ( created_at ) => {
   const orderDate = new Date(created_at)
-  const date = orderDate.getDate();
-  const month = orderDate.getMonth(); //Be careful! January is 0 not 1
-  const year = orderDate.getFullYear();
+  const date = orderDate.getDate()
+  const month = orderDate.getMonth()
+  const year = orderDate.getFullYear()
 
   return  (month + 1) + "-" + date + "-" + year;
 }
 
-export const SingleOrderPage = ({ match }) => {
+export const SingleOrderPage = () => {
+  const { orderId } = useParams()
   const dispatch = useDispatch()
-  const { orderId } = match.params
   const order = useSelector(state => selectOrderById(state, orderId))
 
   const orderStatus = useSelector(state => state.orders.status)
