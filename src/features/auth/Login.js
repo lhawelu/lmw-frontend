@@ -33,7 +33,7 @@ export const Login = () => {
       dispatch(clearState())
       history.push('/orders')
     }
-  }, [isError, isSuccess, errorMessage.message, history, dispatch]);
+  }, [isError, isSuccess, errorMessage.message, history, dispatch])
 
   return (
     <div>
