@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchNewOrder, itemAdded, completeNewOrder } from './newOrderFetches'
+import { fetchNewOrder, itemAdded, completeNewOrder, deleteItem } from './newOrderFetches'
 
 const initialState = {
   currentOrder: {},
@@ -68,6 +68,16 @@ const newOrdersSlice = createSlice({
       state.addItemErrorMessage = action.payload
       state.addItemError = true
     },
+    [deleteItem.fulfilled]: (state, action) => {
+      state.currentOrder = action.payload.current_order
+      state.removeItemSuccess = true
+
+      return state
+    },
+    [deleteItem.rejected]: (state, action) => {
+      state.removeItemErrorMessage = action.payload
+      state.removeItemError = true
+    }
   }  
 })
 

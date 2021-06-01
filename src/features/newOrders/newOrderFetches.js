@@ -52,7 +52,7 @@ export const itemAdded = createAsyncThunk('newOrder/itemAdded', async (body, thu
 export const deleteItem = createAsyncThunk('newOrder/deleteItem', async (body, thunkAPI) => {
   const token = window.localStorage.getItem('token')  
   const configObj = {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
     'content-type': 'application/json',
     'Authorization': `Bearer ${token}`
@@ -61,7 +61,7 @@ export const deleteItem = createAsyncThunk('newOrder/deleteItem', async (body, t
   };
 
   try {
-    const response = await fetch(`${newOrderURL}complete_order`, configObj)
+    const response = await fetch(`${newOrderURL}order_items/${body.order_item.order_item_id}`, configObj)
     let data = await response.json();
     if (response.status === 200) {
       return data
