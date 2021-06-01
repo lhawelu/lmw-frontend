@@ -1,39 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { Card, Grid, Icon, Button } from 'semantic-ui-react'
+import { Card, Grid } from 'semantic-ui-react'
 import { OrderItemCard } from './OrderItemCard'
 import { AddItemCard } from './AddItemPage'
 import { CartOrder } from './CartOrder'
 import { useDispatch} from 'react-redux'
 
 import { selectAllItems } from '../items/itemSlicer' 
-import { fetchNewOrder, completeNewOrder } from './newOrderFetches'
-import { clearNewOrderStatus, newOrderSelector } from './newOrdersSlice'
-import { resetStatus } from '../orders/ordersSlice'
+import { fetchNewOrder } from './newOrderFetches'
+import { newOrderSelector } from './newOrdersSlice'
 
 export const NewOrderPage = () => {
-  const history = useHistory();
   const dispatch = useDispatch()
-
-  const { 
-    currentOrder,
-    newOrderFetchStatus,
-    newFetchErrorMessage, 
-    completeOrderSuccess,
-    completeOrderError,
-    completeOrderErrorMessage,
-    addItemError,
-    ddItemErrorMessage
-  } = useSelector(newOrderSelector)
-
-  const items = useSelector(selectAllItems)
-  
+  const { newOrderFetchStatus } = useSelector(newOrderSelector)
+  const items = useSelector(selectAllItems) 
   const [showPage, setShowPage] = useState(false)
   const [item, setItem] = useState('')
-  const [orderLoadingStatus, setOrderLoadingStatus] = useState()
   
-
   const onAddToOrder = (item) => {
     setShowPage(true)
     setItem(item)

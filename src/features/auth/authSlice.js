@@ -1,13 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-const loginURL = 'http://localhost:3000/api/v1/login'
+const URL = 'http://localhost:3000/api/v1/'
 
 const initialState = {
   loggedIn: !!window.localStorage.getItem('token'),
   status: 'idle',
-  isSuccess: false,
-  isError: false,
-  errorMessage: '',
+  loginIsSuccess: false,
+  loginIsError: false,
+  loginErrorMessage: '',
+  createUserIsSuccess: false,
+  createUserIsError: false,
+  createUserMessage: '',
+  userCreatePage: false
 }
 
 export const loginAuth = createAsyncThunk('auth/loginAuth', async (body, thunkAPI) => {
@@ -20,11 +24,33 @@ export const loginAuth = createAsyncThunk('auth/loginAuth', async (body, thunkAP
   };
 
   try {
-    const response = await fetch(loginURL, configObj)
-    let data = await response.json();
+    const response = await fetch(`${URL}login`, configObj)
+    let data = await response.json()
     if (response.status === 202) {
       window.localStorage.setItem('token', data.jwt)
       window.localStorage.setItem('username', data.user.username)
+      return data
+    } else {
+      return thunkAPI.rejectWithValue(data)
+    }
+  } catch (e) {
+    thunkAPI.rejectWithValue(e.response.data)
+  }
+})
+
+export const createUser = createAsyncThunk('auth/createUser', async (body, thunkAPI) => {
+  const configObj = {
+    method: 'POST',
+    headers: {
+    'content-type': 'application/json'
+    },
+    body: body
+  };
+
+  try {
+    const response = await fetch(`${URL}users`, configObj)
+    let data = await response.json()
+    if (response.status === 201) {
       return data
     } else {
       return thunkAPI.rejectWithValue(data)
@@ -38,29 +64,52 @@ const authSlice = createSlice({
   name: 'auth',
   initialState, 
   reducers: {
-    clearState: (state) => {
-      state.isError = false
-      state.isSuccess = false
+    clearLoginState: (state) => {
+      state.loginIsError = false
+      state.loginIsSuccess = false
+      return state
+    },
+    clearCreateUserState: (state) => {
+      state.createUserIsError = false
+      state.createUserIsSuccess = false
+      return state
+    },
+    createPage: (state) => {
+      state.userCreatePage = true
+      return state
+    },
+    loginPage: (state) => {
+      state.userCreatePage = false
       return state
     }
   },
   extraReducers: {
     [loginAuth.fulfilled]: (state, action) => {
-      state.isSuccess = true
+      state.loginIsSuccess = true
       state.loggedIn = true
       state.status = 'succeeded'
       return state
     },
     [loginAuth.rejected]: (state, action) => {
-      state.isError = true;
-      state.errorMessage = action.payload;
+      state.loginIsError = true
+      state.loginErrorMessage = action.payload
+    },
+    [createUser.fulfilled]: (state, action) => {
+      state.createUserIsSuccess = true
+      state.createUserMessage = action.payload
+      return state
+    },
+    [createUser.rejected]: (state, action) => {
+      state.createUserIsError = true
+      state.createUserMessage = action.payload
+      return state
     }
   }
   
 })
 
-export const { clearState } = authSlice.actions
+export const { clearLoginState, clearCreateUserState, createPage, loginPage } = authSlice.actions
 
 export default authSlice.reducer
 
-export const authSelector = state => state.auth;
+export const authSelector = state => state.auth

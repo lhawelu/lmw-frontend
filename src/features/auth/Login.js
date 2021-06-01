@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 
-import { loginAuth, authSelector, clearState } from './authSlice'
+import { loginAuth, authSelector, clearLoginState } from './authSlice'
 
 export const Login = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { register, formState: { errors }, handleSubmit } = useForm()
 
-  const { isSuccess, isError, errorMessage } = useSelector(authSelector)
+  const { loginIsSuccess, loginIsError, loginErrorMessage } = useSelector(authSelector)
 
   const handleLogin = (data) => {
     const body = JSON.stringify({user: data})
@@ -19,21 +19,21 @@ export const Login = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clearState())
+      dispatch(clearLoginState())
     };
   }, [dispatch]);
 
   useEffect(() => {
-    if (isError) {
-      alert(errorMessage.message)
-      dispatch(clearState())
+    if (loginIsError) {
+      alert(loginErrorMessage.message)
+      dispatch(clearLoginState())
     }
 
-    if (isSuccess) {
-      dispatch(clearState())
+    if (loginIsSuccess) {
+      dispatch(clearLoginState())
       history.push('/orders')
     }
-  }, [isError, isSuccess, errorMessage.message, history, dispatch])
+  }, [loginIsError, loginIsSuccess, loginErrorMessage.message, history, dispatch])
 
   return (
     <div>
@@ -45,7 +45,7 @@ export const Login = () => {
           <input type="password" name="password" {...register('password', { required: true })} />Password
         </div>
         <div style={{display: 'flex','justifyContent': 'center'}}>
-          <input type="submit" value="GO"/>
+          <input type="submit" value="Login"/>
         </div>
         {errors.username?.type === 'required' && "Username is required"}
         <br/>
