@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 
-import { loginAuth, authSelector, clearLoginState } from './authSlice'
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+
+import { loginAuth, authSelector, clearLoginState, createPage } from './authSlice'
 
 export const Login = () => {
   const dispatch = useDispatch()
@@ -15,6 +22,10 @@ export const Login = () => {
   const handleLogin = (data) => {
     const body = JSON.stringify({user: data})
     dispatch(loginAuth(body))
+  }
+
+  const onCreatePage = () => {
+    dispatch(createPage())
   }
 
   useEffect(() => {
@@ -36,21 +47,45 @@ export const Login = () => {
   }, [loginIsError, loginIsSuccess, loginErrorMessage.message, history, dispatch])
 
   return (
-    <div>
+    <Container maxWidth="xs" >
       <form onSubmit={handleSubmit(handleLogin)}>
-        <div>
-          <input type="username" name="username" {...register('username', { required: true })} />Username  
-        </div>
-        <div>
-          <input type="password" name="password" {...register('password', { required: true })} />Password
-        </div>
-        <div style={{display: 'flex','justifyContent': 'center'}}>
-          <input type="submit" value="Login"/>
-        </div>
-        {errors.username?.type === 'required' && "Username is required"}
-        <br/>
-        {errors.password?.type === 'required' && "Password is required"}
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <img src='https://www.lasmontanasmarkets.com/images/lasMontanas-logo.png' />
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField fullWidth label='Username' type='username' name='username' {...register('username', { required: true })} />    
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth label='Password' type="password" name="password" {...register('password', { required: true })} />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" value="Login" variant="contained">
+              Login
+            </Button>
+          </Grid>
+          <div>
+            {errors.username?.type === 'required' && "Username is required"}
+            <br/>
+            {errors.password?.type === 'required' && "Password is required"}
+          </div>
+          <Grid item xs={12}>
+            <p>
+              <Typography>
+                <span>New to Las Montañas? Click </span>
+                <Link href="#" onClick={onCreatePage}>
+                  here 
+                </Link>
+                <span> to create a new account!</span>
+              </Typography>
+            </p>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Container>
   )
 }
