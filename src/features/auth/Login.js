@@ -47,11 +47,11 @@ export const Login = () => {
   }, [loginIsError, loginIsSuccess, loginErrorMessage.message, history, dispatch])
 
   return (
-    <Container maxWidth="xs" >
+    <Container maxWidth='xs' >
       <form onSubmit={handleSubmit(handleLogin)}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <img src='https://www.lasmontanasmarkets.com/images/lasMontanas-logo.png' />
+            <img alt='Las Montanas Logo' src='https://www.lasmontanasmarkets.com/images/lasMontanas-logo.png' />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={2}>
@@ -59,25 +59,25 @@ export const Login = () => {
                 <TextField fullWidth label='Username' type='username' name='username' {...register('username', { required: true })} />    
               </Grid>
               <Grid item xs={12}>
-                <TextField fullWidth label='Password' type="password" name="password" {...register('password', { required: true })} />
+                <TextField fullWidth label='Password' type='password' name='password' {...register('password', { required: true })} />
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" value="Login" variant="contained">
+            <Button type='submit' value='Login' variant='contained'>
               Login
             </Button>
           </Grid>
           <div>
-            {errors.username?.type === 'required' && "Username is required"}
+            {errors.username?.type === 'required' && 'Username is required'}
             <br/>
-            {errors.password?.type === 'required' && "Password is required"}
+            {errors.password?.type === 'required' && 'Password is required'}
           </div>
           <Grid item xs={12}>
             <p>
               <Typography>
                 <span>New to Las Montañas? Click </span>
-                <Link href="#" onClick={onCreatePage}>
+                <Link href='#' onClick={onCreatePage}>
                   here 
                 </Link>
                 <span> to create a new account!</span>

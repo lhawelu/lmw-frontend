@@ -16,7 +16,6 @@ export const CartItem = ({ item }) => {
   }
 
   const onDeleteItem = (body) => {
-    // console.log(body)
     dispatch(deleteItem(body))
   }
     

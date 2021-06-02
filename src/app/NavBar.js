@@ -52,13 +52,13 @@ export const NavBar = () => {
   
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton edge="start" onClick={handleClick} className={classes.menuButton} color="inherit" aria-label="menu">
+      <AppBar position='static'>
+        <Toolbar variant='dense'>
+          <IconButton edge='start' onClick={handleClick} className={classes.menuButton} color='inherit' aria-label='menu'>
             <MenuIcon />
           </IconButton>
           <Menu
-            id="simple-menu"
+            id='simple-menu'
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
@@ -82,11 +82,11 @@ export const NavBar = () => {
               New Order
             </MenuItem>
           </Menu>
-          <Typography variant="h6" align='left' className={classes.title}>
+          <Typography variant='h6' align='left' className={classes.title}>
             {menuHeader}
           </Typography>
           <Button
-            color="inherit" 
+            color='inherit' 
             onClick={() => {
               logOut()
               history.push('/')

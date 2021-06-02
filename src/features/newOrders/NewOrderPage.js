@@ -51,7 +51,7 @@ export const NewOrderPage = () => {
         <Grid.Row columns={2} >
           <Grid.Column width={10}>
             <Card.Group className="ui four stackable cards">
-              {items.map(item => <OrderItemCard key={ item.id } item={ item } onAddToOrder={onAddToOrder} /*onAddToOrder={onAddToOrder}*//>)}
+              {items.map(item => <OrderItemCard key={ item.id } item={ item } onAddToOrder={onAddToOrder} />)}
             </Card.Group>
           </Grid.Column>
           <CartOrder />

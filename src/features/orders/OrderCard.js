@@ -1,5 +1,10 @@
-import { Card, List } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 const formatDate = ( created_at ) => {
   const orderDate = new Date(created_at)
@@ -10,28 +15,65 @@ const formatDate = ( created_at ) => {
   return  (month + 1) + "-" + date + "-" + year;
 }
 
+const useStyles = makeStyles((theme) => ({
+  accordSum: {
+    textAlign: 'left'
+  },
+  listContainer: {
+    alignContent: 'left'
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '70%',
+    flexShrink: 1,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+    align: 'right'
+  },
+  accordDetails:{
+    textAlign: 'left',
+    display: 'block'
+  },
+  listItemStyle: {
+    fontSize: '5px',
+    color: theme.palette.text.secondary,
+    paddingTop: 4
+  }
+}));
+
 export const OrderCard = ({ order }) => {
+  const classes = useStyles();
+  const history = useHistory()
   
   return (
-    <Card >
-      <Card.Content>
-        <Card.Header>Order Placed </Card.Header>
-        <Card.Header>{formatDate(order.created_at)}</Card.Header>
-        <Card.Meta>
-        <span >Total: {order.total_amount}</span>
-        </Card.Meta>
-      </Card.Content>
-      <Card.Content extra>
-        <h4>Order Items:</h4>
-        <List bulleted>
-          {order.items.map((item, index )=> (
-            <List.Item key={index}>{item.item.name}</List.Item>
-          ))}
-        </List>
-      </Card.Content>
-      <Link to={`/orders/${order.id}`} className='button muted-button'>
-         View Order
-       </Link>
-    </Card>
+    <Container className={classes.listContainer} maxWidth="sm">
+    <Accordion >
+      <AccordionSummary
+        className={classes.accordSum}
+        // expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography className={classes.heading}>
+          Order Place: {formatDate(order.created_at)} <br/>
+          Total Amount: {order.total_amount}
+        </Typography><br/>
+        <Button 
+          color="primary" 
+          disableElevation
+          onClick={() => {
+            // console.log(`/orders/${order.id}`)
+            history.push(`/orders/${order.id}`)
+          }}
+          >
+           View Order
+        </Button> 
+      </AccordionSummary>
+    </Accordion>
+    </Container>
   )
 }
+
+

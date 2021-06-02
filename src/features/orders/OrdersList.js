@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Card } from 'semantic-ui-react'
-import "semantic-ui-css/semantic.min.css";
 import { OrderCard } from './OrderCard'
 
 import { selectAllOrders, fetchOrders } from './ordersSlice'
@@ -31,11 +29,11 @@ export const OrdersList = () => {
   }
 
   return (
-    <section>
+    <div >
       <h2>Orders</h2>
-      <Card.Group className="ui four stackable cards">
+      <div>
         {content}
-      </Card.Group>
-    </section>
+      </div>  
+    </div>
   )
 }
