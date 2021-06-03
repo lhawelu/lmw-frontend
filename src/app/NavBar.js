@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 
 import { newOrderSelector } from '../features/newOrders/newOrdersSlice'
 
+import { makeStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -15,6 +16,14 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Badge from '@material-ui/core/Badge'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 0,
+    padding: '0 4px',
+  },
+}))(Badge)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
     },
-  }
+  },
 }));
 
 export const NavBar = () => {
@@ -105,13 +114,11 @@ export const NavBar = () => {
           <Typography variant='h6' align='left' className={classes.title}>
             {menuHeader}
           </Typography>
-          <Badge 
-            className={classes.cartBadge} 
-            badgeContent={cartCount} 
-            color="error"
-          >
-            <ShoppingCartIcon />
-          </Badge>
+          <IconButton color='inherit' aria-label="cart">
+            <StyledBadge badgeContent={cartCount}  color="secondary">
+              <ShoppingCartIcon onClick={() => history.push('/order_review')}/>
+            </StyledBadge>
+          </IconButton>
           <Button
             color='inherit' 
             onClick={() => {

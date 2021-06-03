@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { Card, Grid } from 'semantic-ui-react'
 import { OrderItemCard } from './OrderItemCard'
 import { AddItemCard } from './AddItemPage'
-import { CartOrder } from './CartOrder'
 import { useDispatch} from 'react-redux'
 
 import { selectAllItems } from '../items/itemSlicer' 
@@ -44,9 +43,6 @@ export const NewOrderPage = () => {
           <Grid.Column textAlign="center" width={10}>
             <h2>Menu</h2>
           </Grid.Column>
-          <Grid.Column textAlign="center" width={3}>
-            <h2>Cart</h2>
-          </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2} >
           <Grid.Column width={10}>
@@ -54,7 +50,6 @@ export const NewOrderPage = () => {
               {items.map(item => <OrderItemCard key={ item.id } item={ item } onAddToOrder={onAddToOrder} />)}
             </Card.Group>
           </Grid.Column>
-          <CartOrder />
         </Grid.Row>
       </Grid>
     ) 

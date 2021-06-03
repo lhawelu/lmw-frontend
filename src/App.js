@@ -14,7 +14,8 @@ import { OrdersList } from './features/orders/OrdersList';
 import { SingleOrderPage } from './features/orders/SingleOrderPage'
 import { NavBar } from './app/NavBar'
 import { NewOrderPage } from './features/newOrders/NewOrderPage'
-import { LandingPage } from './routes/LandingPage';
+import { LandingPage } from './routes/LandingPage'
+import { CartReview } from './features/newOrders/CartReview'
 
 function App() {
   const userLoggedIn = !!useSelector(state => state.auth.loggedIn)
@@ -39,6 +40,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute exact path='/new_order'>
             <NewOrderPage />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/order_review'>
+            <CartReview />
           </ProtectedRoute>
           <Route path="*">
             <div>404 Not found </div>

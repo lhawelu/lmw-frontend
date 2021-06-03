@@ -1,13 +1,26 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Icon, Item } from 'semantic-ui-react'
-import Button from '@material-ui/core/Button';
+
+import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 import { newOrderSelector } from './newOrdersSlice'
 import { deleteItem } from './newOrderFetches'
 
+const useStyles = makeStyles((theme) => ({
+  listItem: {
+    padding: theme.spacing(1, 10),
+  },
+}));
+
 export const CartItem = ({ item }) => {
   const dispatch = useDispatch()
+  const classes = useStyles()
   const { currentOrder } = useSelector(newOrderSelector)
   const body = {
     order_item: {
@@ -21,17 +34,14 @@ export const CartItem = ({ item }) => {
   }
     
   return (
-      <Item>
-        <Item.Content verticalAlign='middle'>
-          <Item.Header>
-            {item.item.name} <Icon name='dollar' />{item.item.price}
-          </Item.Header>
-        </Item.Content>
-        <Item.Extra>
-          <Button primary='true' floated='right' onClick={e => onDeleteItem(body)}>
-            <Icon name='delete' />
-          </Button>
-        </Item.Extra>
-      </Item>
+    <ListItem className={classes.listItem} key={item.item.name}>
+      <ListItemText primary={item.item.name} secondary={item.item.description} />
+      <Typography variant="body1">{item.item.price}</Typography>
+      <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="delete">
+          <DeleteIcon onClick={e => onDeleteItem(body)}/>
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   )
 }

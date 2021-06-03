@@ -4,7 +4,7 @@ import { fetchNewOrder, itemAdded, completeNewOrder, deleteItem } from './newOrd
 const initialState = {
   currentOrder: {},
   newOrderFetchStatus: 'idle',
-  newFetchErrorMessage: '',
+  newOrderFetchErrorMessage: '',
   completeOrderSuccess: false,
   completeOrderError: false,
   completeOrderErrorMessage: '',
@@ -21,7 +21,7 @@ const newOrdersSlice = createSlice({
       reducer(state, action) {
         state.currentOrder =  {}
         state.newOrderFetchStatus = 'idle'
-        state.newFetchErrorMessage = ''
+        state.newOrderFetchErrorMessage = ''
     
         state.completeOrderSuccess = false
         state.completeOrderError = false
