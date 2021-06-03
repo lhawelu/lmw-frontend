@@ -1,8 +1,10 @@
 import React, { Fragment, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import Button from '@material-ui/core/Button';
 
-import { Item, Grid, Icon, Button } from 'semantic-ui-react'
+
+import { Item, Grid, Icon } from 'semantic-ui-react'
 import { useSelector } from 'react-redux'
 
 import { clearNewOrderStatus, newOrderSelector } from './newOrdersSlice'
@@ -17,8 +19,8 @@ export const CartOrder = () => {
 
   const { newOrderFetchStatus, currentOrder, completeOrderSuccess, completeOrderError, completeOrderErrorMessage } = useSelector(newOrderSelector)
   
-  const onCheckout = (itemId) => {
-    dispatch(completeNewOrder(itemId))
+  const onCheckout = (currentOrder) => {
+    dispatch(completeNewOrder(currentOrder))
   }
 
   useEffect(() => {
@@ -43,10 +45,10 @@ export const CartOrder = () => {
       <Grid.Column width={3} textAlign="center" >  
         Subtotal: <Icon name='dollar' /> {currentOrder.subtotal} 
         <br/>
-        <Button onClick={e => onCheckout(currentOrder.id)}>Checkout</Button>
+        <Button onClick={e => onCheckout(currentOrder)}>Checkout</Button>
         <Item.Group>
           {currentOrder.items.map(item => (
-            <CartItem item={item} />
+            <CartItem key={item.order_item_id}item={item} />
           ))}
         </Item.Group>    
       </Grid.Column>

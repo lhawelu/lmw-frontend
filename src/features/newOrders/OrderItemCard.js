@@ -1,4 +1,5 @@
-import { Card, Button, Icon } from 'semantic-ui-react'
+import { Card, Icon } from 'semantic-ui-react'
+import Button from '@material-ui/core/Button';
 import "semantic-ui-css/semantic.min.css";
 
 export const OrderItemCard = ( props ) => {

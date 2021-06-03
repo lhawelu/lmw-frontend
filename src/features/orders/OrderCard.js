@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: '70%',
     flexShrink: 1,
   },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-    align: 'right'
-  },
   accordDetails:{
     textAlign: 'left',
     display: 'block'
@@ -52,7 +47,6 @@ export const OrderCard = ({ order }) => {
     <Accordion >
       <AccordionSummary
         className={classes.accordSum}
-        // expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
@@ -64,7 +58,6 @@ export const OrderCard = ({ order }) => {
           color="primary" 
           disableElevation
           onClick={() => {
-            // console.log(`/orders/${order.id}`)
             history.push(`/orders/${order.id}`)
           }}
           >

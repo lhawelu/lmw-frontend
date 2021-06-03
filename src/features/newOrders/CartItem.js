@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Icon, Item, Button } from 'semantic-ui-react'
+import { Icon, Item } from 'semantic-ui-react'
+import Button from '@material-ui/core/Button';
 
 import { newOrderSelector } from './newOrdersSlice'
 import { deleteItem } from './newOrderFetches'
@@ -19,7 +20,6 @@ export const CartItem = ({ item }) => {
     dispatch(deleteItem(body))
   }
     
-
   return (
       <Item>
         <Item.Content verticalAlign='middle'>
@@ -28,7 +28,7 @@ export const CartItem = ({ item }) => {
           </Item.Header>
         </Item.Content>
         <Item.Extra>
-          <Button primary floated='right' onClick={e => onDeleteItem(body)}>
+          <Button primary='true' floated='right' onClick={e => onDeleteItem(body)}>
             <Icon name='delete' />
           </Button>
         </Item.Extra>
