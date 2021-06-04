@@ -42,7 +42,7 @@ export const Login = () => {
 
     if (loginIsSuccess) {
       dispatch(clearLoginState())
-      history.push('/orders')
+      history.push('/new_order')
     }
   }, [loginIsError, loginIsSuccess, loginErrorMessage.message, history, dispatch])
 

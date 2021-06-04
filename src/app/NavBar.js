@@ -93,15 +93,6 @@ export const NavBar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem >Profile</MenuItem>
-            <MenuItem 
-              onClick={() => {
-                history.push('/orders')
-                handleClose()
-              }}
-            >
-              My Orders
-            </MenuItem>
             <MenuItem
               onClick={() => {
                 history.push('/new_order')
@@ -110,6 +101,15 @@ export const NavBar = () => {
             >
               New Order
             </MenuItem>
+            <MenuItem 
+              onClick={() => {
+                history.push('/orders')
+                handleClose()
+              }}
+            >
+              My Orders
+            </MenuItem>
+            <MenuItem >Profile</MenuItem>
           </Menu>
           <Typography variant='h6' align='left' className={classes.title}>
             {menuHeader}
@@ -123,7 +123,6 @@ export const NavBar = () => {
             color='inherit' 
             onClick={() => {
               logOut()
-              history.push('/')
               }}
           >
             Logout

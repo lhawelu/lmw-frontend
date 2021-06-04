@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from 'react-router-dom'
 
 import './App.css';
@@ -16,6 +15,7 @@ import { NavBar } from './app/NavBar'
 import { NewOrderPage } from './features/newOrders/NewOrderPage'
 import { LandingPage } from './routes/LandingPage'
 import { CartReview } from './features/newOrders/CartReview'
+import { WelcomePage } from './features/welcomePage/WelcomePage'
 
 function App() {
   const userLoggedIn = !!useSelector(state => state.auth.loggedIn)
@@ -27,7 +27,7 @@ function App() {
         <Switch>
           <Route exact path='/'>
             {userLoggedIn ? (
-              <Redirect to="/orders" />
+              <WelcomePage />
             ) : (
               <LandingPage />
             )}
@@ -43,6 +43,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute exact path='/order_review'>
             <CartReview />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/'>
+            <WelcomePage />
           </ProtectedRoute>
           <Route path="*">
             <div>404 Not found </div>

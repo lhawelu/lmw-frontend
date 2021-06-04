@@ -7,14 +7,17 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css'
 import { fetchItems } from './features/items/itemSlicer'
+import { SnackbarProvider } from 'notistack'
 
 store.dispatch(fetchItems())
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <SnackbarProvider maxSnack={3}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

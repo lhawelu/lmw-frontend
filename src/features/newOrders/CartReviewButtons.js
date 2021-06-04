@@ -57,7 +57,7 @@ export const CartReviewButtons = () => {
         onClick={() => onCheckout(currentOrder)}
         className={classes.button}
       >
-        Place order
+        Pay Now
       </Button>
     </div>
   )

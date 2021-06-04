@@ -13,6 +13,12 @@ import Paper from '@material-ui/core/Paper'
 import { newOrderSelector } from './newOrdersSlice'
 import { fetchNewOrder } from './newOrderFetches'
 
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
+
 const useStyles = makeStyles((theme) => ({
   listItem: {
     padding: theme.spacing(1, 10),
@@ -70,31 +76,31 @@ export const CartReview = () => {
   let content
 
   if (newOrderFetchStatus === 'loading') {
-    content = <div className="loader">Loading...</div>
+    content = <div className='loader'>Loading...</div>
   } else if (newOrderFetchStatus === 'succeeded') {
     content = (
     <Paper className={classes.paper} >
-      <Typography variant="h6" gutterBottom>
+      <Typography variant='h6' gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
         <CartItems />
         <ListItem className={classes.totalsListItem}>
-          <ListItemText primary="Subtotal" />
-          <Typography variant="subtitle1" className={classes.total}>
-            {currentOrder.subtotal ? `$${currentOrder.subtotal}`: '$0' }
+          <ListItemText primary='Subtotal' />
+          <Typography variant='subtitle1' className={classes.total}>
+            {currentOrder.subtotal ? formatter.format(currentOrder.subtotal): '$0' }
           </Typography>
         </ListItem>
         <ListItem className={classes.totalsListItem}>
           <ListItemText primary='Taxes - 8.75%'/>
-          <Typography variant="subtitle1" className={classes.total}>
-            {currentOrder.tax_amount ? `$${currentOrder.tax_amount}`: '$0' }
+          <Typography variant='subtitle1' className={classes.total}>
+            {currentOrder.tax_amount ? formatter.format(currentOrder.tax_amount): '$0' }
           </Typography>
         </ListItem>
         <ListItem className={classes.totalsListItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            {currentOrder.total_amount ? `$${currentOrder.total_amount}`: '$0' }
+          <ListItemText primary='Total' />
+          <Typography variant='subtitle1' className={classes.total}>
+            {currentOrder.total_amount ? formatter.format(currentOrder.total_amount): '$0' }
           </Typography>
         </ListItem>
       </List>

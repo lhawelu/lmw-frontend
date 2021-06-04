@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack'
 
 import { Card, Button, Icon, TextArea } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -10,6 +11,7 @@ import { itemAdded } from './newOrderFetches'
 
 export const AddItemCard = ({ item, onGoBack }) => {
   const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar()
 
   const { currentOrder } = useSelector(newOrderSelector)
   const [specialInstructions, setSpecialInstructions] = useState('')
@@ -25,6 +27,7 @@ export const AddItemCard = ({ item, onGoBack }) => {
   const onItemAdded = (body) => {
     dispatch(itemAdded(body))
     onGoBack()
+    enqueueSnackbar('Item has been added to your cart.', { variant: 'success' })
   }
   
   return (
