@@ -42,23 +42,25 @@ export const SingleOrderPage = () => {
   else {
     return (
       <section>
-        <Card>
-          <Card.Content>
-            <Card.Header>Order Placed </Card.Header>
-            <Card.Header>{formatDate(order.created_at)}</Card.Header>
-            <Card.Meta>
-            <span >Total: {order.total_amount}</span>
-            </Card.Meta>
-          </Card.Content>
-          <Card.Content extra>
-            <h4>Order Items:</h4>
-            <List bulleted>
-              {order.items.map((item, index )=> (
-                <List.Item key={index}>{item.item.name}</List.Item>
-              ))}
-            </List>
-          </Card.Content>
-        </Card>
+        <Card.Group centered >
+          <Card>
+            <Card.Content>
+              <Card.Header>Order Placed </Card.Header>
+              <Card.Header>{formatDate(order.created_at)}</Card.Header>
+              <Card.Meta>
+              <span >Total: {order.total_amount}</span>
+              </Card.Meta>
+            </Card.Content>
+            <Card.Content extra>
+              <h4>Order Items:</h4>
+              <List bulleted>
+                {order.items.map((item, index )=> (
+                  <List.Item key={index}>{item.item.name}</List.Item>
+                ))}
+              </List>
+            </Card.Content>
+          </Card>
+        </Card.Group>
       </section>
     )
   }

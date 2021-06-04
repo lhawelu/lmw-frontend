@@ -81,7 +81,7 @@ export const NavBar = () => {
   
   return (
     <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar className={classes.test} position='static'>
         <Toolbar variant='dense'>
           <IconButton edge='start' onClick={handleClick} className={classes.menuButton} color='inherit' aria-label='menu'>
             <MenuIcon />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -43,9 +43,33 @@ export const CartReviewButtons = () => {
 
   }, [completeOrderError, completeOrderSuccess, completeOrderErrorMessage.message, history, dispatch])
 
+  let content 
+
+  if (currentOrder.items.length > 0) {
+    content = (
+      <Fragment>
+        <Button 
+          onClick={() => history.push('/new_order')} 
+          className={classes.button}
+        >
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => onCheckout(currentOrder)}
+          className={classes.button}
+        >
+          Pay Now
+        </Button>
+      </Fragment>
+    )
+  } else {
+    content = ''
+  }
   return (
     <div className={classes.buttons}>
-      <Button 
+      {/* <Button 
         onClick={() => history.push('/new_order')} 
         className={classes.button}
       >
@@ -58,7 +82,8 @@ export const CartReviewButtons = () => {
         className={classes.button}
       >
         Pay Now
-      </Button>
+      </Button> */}
+      {content}
     </div>
   )
 }

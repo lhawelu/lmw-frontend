@@ -74,15 +74,13 @@ export const Login = () => {
             {errors.password?.type === 'required' && 'Password is required'}
           </div>
           <Grid item xs={12}>
-            <p>
-              <Typography>
-                <span>New to Las Montañas? Click </span>
-                <Link href='#' onClick={onCreatePage}>
-                  here 
-                </Link>
-                <span> to create a new account!</span>
-              </Typography>
-            </p>
+            <Typography>
+              <span>New to Las Montañas? Click </span>
+              <Link href='#' onClick={onCreatePage}>
+                here 
+              </Link>
+              <span> to create a new account!</span>
+            </Typography>
           </Grid>
         </Grid>
       </form>

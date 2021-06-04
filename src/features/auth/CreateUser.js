@@ -89,15 +89,13 @@ export const CreateUser = () => {
             {errors.password?.type === 'required' && 'Password is required'}
           </div>
           <Grid item xs={12}>
-            <p>
-              <Typography>
-                <span>Already have an account? Click </span>
-                <Link href='#' onClick={onLoginPage}>
-                  here 
-                </Link>
-                <span> to login.</span>
-              </Typography>
-            </p>
+            <Typography>
+              <span>Already have an account? Click </span>
+              <Link href='#' onClick={onLoginPage}>
+                here 
+              </Link>
+              <span> to login.</span>
+            </Typography>
           </Grid>
         </Grid>
       </form>

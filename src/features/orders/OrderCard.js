@@ -24,12 +24,16 @@ const formatter = new Intl.NumberFormat('en-US', {
 const useStyles = makeStyles((theme) => ({
   orderCard: {
     flexGrow: 1,
+    padding: theme.spacing(1),
+    borderRadius: 3,
+  
   },
   paper: {
+    borderRadius: 8,
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: 500,
-    textAlign: 'left'
+    textAlign: 'left',
   },
   image: {
     width: 128,
@@ -86,5 +90,3 @@ export const OrderCard = ({ order }) => {
     </div>
   )
 }
-
-

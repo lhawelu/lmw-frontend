@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { CartItem } from './CartItem'
 
@@ -28,13 +29,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 export const CartItems = () => {
+  const history = useHistory()
   const classes = useStyles()
   const { currentOrder } = useSelector(newOrderSelector)
-  
+
   let listContent
 
-  if (!currentOrder.items) {
+  if (currentOrder.items.length > 0) {
+    listContent = (
+      currentOrder.items.map((item) => (
+        <CartItem item={item} />
+      ))
+    )
+  } else {
     listContent = (
       <Fragment>
         <ListItem className={classes.noListItem}>
@@ -43,17 +53,14 @@ export const CartItems = () => {
           </ListItemText>
         </ListItem>
         <ListItem className={classes.listButton} alignItems='center'>
-          <Button variant="contained">
+          <Button 
+            onClick={() => history.push('/new_order')} 
+            variant="contained"
+          >
             Back to Order
           </Button>
         </ListItem>
       </Fragment>
-    )
-  } else {
-    listContent = (
-      currentOrder.items.map((item) => (
-        <CartItem item={item} />
-      ))
     )
   }
 

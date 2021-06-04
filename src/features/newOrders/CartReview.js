@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   root: {
+    height: 'auto',
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -65,7 +66,6 @@ export const CartReview = () => {
   const classes = useStyles()
   const { newOrderFetchErrorMessage, newOrderFetchStatus } = useSelector(newOrderSelector)
   const { currentOrder } = useSelector(newOrderSelector)
-
 
   useEffect(() => {
     if (newOrderFetchStatus === 'idle') {
@@ -97,7 +97,7 @@ export const CartReview = () => {
             {currentOrder.tax_amount ? formatter.format(currentOrder.tax_amount): '$0' }
           </Typography>
         </ListItem>
-        <ListItem className={classes.totalsListItem}>
+        <ListItem className={classes.totalsListItem} >
           <ListItemText primary='Total' />
           <Typography variant='subtitle1' className={classes.total}>
             {currentOrder.total_amount ? formatter.format(currentOrder.total_amount): '$0' }
